@@ -1,12 +1,10 @@
-from flask import Flask, render_template, jsonify
+import os
+from flask import Flask, jsonify
+from flask_cors import CORS
 from monitor import get_system_metrics
 
 app = Flask(__name__)
-
-
-@app.route('/')
-def home():
-    return render_template('index.html')
+CORS(app)  # Enables GitHub Pages to fetch from Render
 
 
 @app.route('/api/metrics')
@@ -15,4 +13,5 @@ def api_metrics():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)

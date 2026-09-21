@@ -1,3 +1,5 @@
 flask
 psutil
 flake8
+gunicorn
+flask-cors
