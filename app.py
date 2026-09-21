@@ -5,69 +5,82 @@ app = Flask(__name__)
 
 HTML_TEMPLATE = """
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>System Health Dashboard</title>
-    <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0f172a; color: #f8fafc; text-align: center; padding: 40px; }
-        h1 { margin-bottom: 20px; color: #38bdf8; }
-        .card-container { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 30px; }
-        .card { background-color: #1e293b; border-radius: 12px; padding: 25px; width: 220px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5); }
-        .card h3 { margin-top: 0; color: #94a3b8; font-size: 0.9rem; text-transform: uppercase; }
-        .card p { font-size: 2rem; font-weight: bold; margin: 10px 0 0 0; color: #38bdf8; }
-        .status-ok { color: #22c55e !important; }
-        .status-warning { color: #ef4444 !important; }
-        .btn { margin-top: 30px; padding: 12px 24px; background-color: #0284c7; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
-        .btn:hover { background-color: #0369a1; }
-    </style>
-</head>
-<body>
-    <h1>System Health & Log Monitor</h1>
-    <div class="card-container">
-        <div class="card">
-            <h3>CPU Usage</h3>
-            <p id="cpu">--%</p>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>System Health & Metrics Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
         </div>
-        <div class="card">
-            <h3>RAM Usage</h3>
-            <p id="ram">--%</p>
-        </div>
-        <div class="card">
-            <h3>Disk Usage</h3>
-            <p id="disk">--%</p>
-        </div>
-        <div class="card">
-            <h3>Status</h3>
-            <p id="status">Checking...</p>
-        </div>
+      </div>
     </div>
-    <button class="btn" onclick="fetchMetrics()">Refresh Metrics</button>
 
-    <script>
-        async function fetchMetrics() {
-            try {
-                const res = await fetch('/api/metrics');
-                const data = await res.json();
-                document.getElementById('cpu').innerText = data.cpu_usage_pct + '%';
-                document.getElementById('ram').innerText = data.ram_usage_pct + '%';
-                document.getElementById('disk').innerText = data.disk_usage_pct + '%';
-                
-                const statusEl = document.getElementById('status');
-                statusEl.innerText = data.status;
-                if(data.status === 'OK') {
-                    statusEl.className = 'status-ok';
-                } else {
-                    statusEl.className = 'status-warning';
-                }
-            } catch (err) {
-                console.error('Error fetching metrics:', err);
-            }
+    <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 shadow-xl backdrop-blur-sm">
+      <h2 class="text-lg font-bold text-white mb-4">Real-Time Performance History</h2>
+      <div class="h-64">
+        <canvas id="metricsChart"></canvas>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    const ctx = document.getElementById('metricsChart').getContext('2d');
+    const chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: [],
+        datasets: [
+          { label: 'CPU %', borderColor: '#3b82f6', backgroundColor: 'rgba(59, 130, 246, 0.1)', data: [], fill: true, tension: 0.4 },
+          { label: 'RAM %', borderColor: '#a855f7', backgroundColor: 'rgba(168, 85, 247, 0.1)', data: [], fill: true, tension: 0.4 }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: { grid: { color: '#1e293b' }, ticks: { color: '#64748b' } },
+          y: { min: 0, max: 100, grid: { color: '#1e293b' }, ticks: { color: '#64748b' } }
+        },
+        plugins: { legend: { labels: { color: '#94a3b8' } } }
+      }
+    });
+
+    async function fetchMetrics() {
+      try {
+        const res = await fetch('/api/metrics');
+        const data = await res.json();
+        const now = new Date().toLocaleTimeString();
+
+        document.getElementById('cpu-value').innerText = data.cpu_usage_pct + '%';
+        document.getElementById('cpu-bar').style.width = data.cpu_usage_pct + '%';
+
+        document.getElementById('ram-value').innerText = data.ram_usage_pct + '%';
+        document.getElementById('ram-bar').style.width = data.ram_usage_pct + '%';
+
+        document.getElementById('disk-value').innerText = data.disk_usage_pct + '%';
+        document.getElementById('disk-bar').style.width = data.disk_usage_pct + '%';
+
+        document.getElementById('last-updated').innerText = 'Last updated: ' + now;
+
+        if (chart.data.labels.length > 10) {
+          chart.data.labels.shift();
+          chart.data.datasets[0].data.shift();
+          chart.data.datasets[1].data.shift();
         }
-        fetchMetrics();
-        setInterval(fetchMetrics, 5000);
-    </script>
+        chart.data.labels.push(now);
+        chart.data.datasets[0].data.push(data.cpu_usage_pct);
+        chart.data.datasets[1].data.push(data.ram_usage_pct);
+        chart.update();
+
+      } catch (err) {
+        console.error('Error fetching metrics:', err);
+      }
+    }
+
+    setInterval(fetchMetrics, 2000);
+    fetchMetrics();
+  </script>
 </body>
 </html>
 """
@@ -81,4 +94,56 @@ def api_metrics():
     return jsonify(get_system_metrics())
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen font-sans antialiased">
+
+  <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="h-3 w-3 rounded-full bg-emerald-500 animate-pulse"></div>
+        <h1 class="text-xl font-bold tracking-tight text-white">System Monitor <span class="text-xs font-normal text-slate-400 border border-slate-700 px-2 py-0.5 rounded-full ml-2">v1.0 CI/CD</span></h1>
+      </div>
+      <div class="text-xs text-slate-400 font-mono" id="last-updated">Updating live...</div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 py-8 space-y-8">
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 shadow-xl backdrop-blur-sm">
+        <div class="flex justify-between items-center mb-4">
+          <span class="text-sm font-semibold text-slate-400 uppercase tracking-wider">CPU Usage</span>
+        </div>
+        <div class="flex items-baseline justify-between">
+          <span class="text-4xl font-extrabold text-white" id="cpu-value">--%</span>
+          <span class="text-xs text-emerald-400 font-medium" id="cpu-status">Normal</span>
+        </div>
+        <div class="w-full bg-slate-800 rounded-full h-2 mt-4 overflow-hidden">
+          <div id="cpu-bar" class="bg-blue-500 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 shadow-xl backdrop-blur-sm">
+        <div class="flex justify-between items-center mb-4">
+          <span class="text-sm font-semibold text-slate-400 uppercase tracking-wider">Memory (RAM)</span>
+        </div>
+        <div class="flex items-baseline justify-between">
+          <span class="text-4xl font-extrabold text-white" id="ram-value">--%</span>
+          <span class="text-xs text-emerald-400 font-medium" id="ram-status">Optimal</span>
+        </div>
+        <div class="w-full bg-slate-800 rounded-full h-2 mt-4 overflow-hidden">
+          <div id="ram-bar" class="bg-purple-500 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 shadow-xl backdrop-blur-sm">
+        <div class="flex justify-between items-center mb-4">
+          <span class="text-sm font-semibold text-slate-400 uppercase tracking-wider">Disk Usage</span>
+        </div>
+        <div class="flex items-baseline justify-between">
+          <span class="text-4xl font-extrabold text-white" id="disk-value">--%</span>
+          <span class="text-xs text-emerald-400 font-medium" id="disk-status">Healthy</span>
+        <div class="w-full bg-slate-800 rounded-full h-2 mt-4 overflow-hidden">
+          <div id="disk-bar" class="bg-emerald-500 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+
