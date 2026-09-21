@@ -98,39 +98,36 @@
     });
 
     async function fetchMetrics() {
-      try {
-        const res = await fetch('/api/metrics');
-        const data = await res.json();
-        const now = new Date().toLocaleTimeString();
+  try {
+    const res = await fetch('https://system-monitor-cicd.onrender.com/api/metrics');
+    const data = await res.json();
 
-        document.getElementById('cpu-value').innerText = data.cpu_usage_pct + '%';
-        document.getElementById('cpu-bar').style.width = data.cpu_usage_pct + '%';
+    // 1. Update text cards
+    document.getElementById('cpu-val').innerText = `${data.cpu_usage_pct}%`;
+    document.getElementById('ram-val').innerText = `${data.ram_usage_pct}%`;
+    document.getElementById('disk-val').innerText = `${data.disk_usage_pct}%`;
 
-        document.getElementById('ram-value').innerText = data.ram_usage_pct + '%';
-        document.getElementById('ram-bar').style.width = data.ram_usage_pct + '%';
-
-        document.getElementById('disk-value').innerText = data.disk_usage_pct + '%';
-        document.getElementById('disk-bar').style.width = data.disk_usage_pct + '%';
-
-        document.getElementById('last-updated').innerText = 'Last updated: ' + now;
-
-        if (chart.data.labels.length > 10) {
-          chart.data.labels.shift();
-          chart.data.datasets[0].data.shift();
-          chart.data.datasets[1].data.shift();
-        }
-        chart.data.labels.push(now);
-        chart.data.datasets[0].data.push(data.cpu_usage_pct);
-        chart.data.datasets[1].data.push(data.ram_usage_pct);
-        chart.update();
-
-      } catch (err) {
-        console.error('Error fetching metrics:', err);
-      }
+    // 2. Update line chart
+    const now = new Date().toLocaleTimeString();
+    if (chart.data.labels.length > 10) {
+      chart.data.labels.shift();
+      chart.data.datasets[0].data.shift();
+      chart.data.datasets[1].data.shift();
     }
 
-    setInterval(fetchMetrics, 2000);
-    fetchMetrics();
+    chart.data.labels.push(now);
+    chart.data.datasets[0].data.push(data.cpu_usage_pct);
+    chart.data.datasets[1].data.push(data.ram_usage_pct);
+    chart.update();
+
+  } catch (err) {
+    console.error('Error fetching metrics:', err);
+  }
+}
+
+// Fetch metrics every 2 seconds
+setInterval(fetchMetrics, 2000);
+fetchMetrics();
   </script>
 </body>
 </html>
