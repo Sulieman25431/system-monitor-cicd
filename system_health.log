@@ -1,0 +1,99 @@
+2026-09-22 00:48:21,624 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.22.124.162:5000
+2026-09-22 00:48:21,624 - INFO - [33mPress CTRL+C to quit[0m
+2026-09-22 00:48:21,624 - INFO -  * Restarting with stat
+2026-09-22 00:48:22,247 - WARNING -  * Debugger is active!
+2026-09-22 00:48:22,253 - INFO -  * Debugger PIN: 373-829-155
+2026-09-22 00:49:39,936 - INFO - 127.0.0.1 - - [22/Sep/2026 00:49:39] "GET / HTTP/1.1" 200 -
+2026-09-22 00:49:41,220 - WARNING - High Resource Usage! CPU: 100.0%, RAM: 95.7%
+2026-09-22 00:49:41,229 - INFO - 127.0.0.1 - - [22/Sep/2026 00:49:41] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 00:49:43,114 - INFO - 127.0.0.1 - - [22/Sep/2026 00:49:43] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-09-22 00:49:46,076 - WARNING - High Resource Usage! CPU: 31.5%, RAM: 93.2%
+2026-09-22 00:49:46,076 - INFO - 127.0.0.1 - - [22/Sep/2026 00:49:46] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 00:49:51,083 - WARNING - High Resource Usage! CPU: 63.3%, RAM: 93.9%
+2026-09-22 00:49:51,083 - INFO - 127.0.0.1 - - [22/Sep/2026 00:49:51] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 00:49:56,578 - WARNING - High Resource Usage! CPU: 45.7%, RAM: 94.5%
+2026-09-22 00:49:56,578 - INFO - 127.0.0.1 - - [22/Sep/2026 00:49:56] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 00:50:01,578 - WARNING - High Resource Usage! CPU: 35.7%, RAM: 94.3%
+2026-09-22 00:50:01,578 - INFO - 127.0.0.1 - - [22/Sep/2026 00:50:01] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 00:50:06,577 - WARNING - High Resource Usage! CPU: 37.0%, RAM: 92.6%
+2026-09-22 00:50:06,577 - INFO - 127.0.0.1 - - [22/Sep/2026 00:50:06] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 00:50:11,567 - WARNING - High Resource Usage! CPU: 59.1%, RAM: 91.6%
+2026-09-22 00:50:11,569 - INFO - 127.0.0.1 - - [22/Sep/2026 00:50:11] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 00:50:16,580 - WARNING - High Resource Usage! CPU: 48.0%, RAM: 91.8%
+2026-09-22 00:50:16,580 - INFO - 127.0.0.1 - - [22/Sep/2026 00:50:16] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 00:50:21,577 - WARNING - High Resource Usage! CPU: 31.7%, RAM: 91.8%
+2026-09-22 00:50:21,577 - INFO - 127.0.0.1 - - [22/Sep/2026 00:50:21] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 00:50:26,578 - WARNING - High Resource Usage! CPU: 46.7%, RAM: 91.2%
+2026-09-22 00:50:26,578 - INFO - 127.0.0.1 - - [22/Sep/2026 00:50:26] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 00:50:31,575 - WARNING - High Resource Usage! CPU: 30.6%, RAM: 91.2%
+2026-09-22 00:50:31,575 - INFO - 127.0.0.1 - - [22/Sep/2026 00:50:31] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 00:50:36,575 - WARNING - High Resource Usage! CPU: 51.5%, RAM: 91.6%
+2026-09-22 00:50:36,575 - INFO - 127.0.0.1 - - [22/Sep/2026 00:50:36] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 00:50:41,585 - WARNING - High Resource Usage! CPU: 56.4%, RAM: 92.5%
+2026-09-22 00:50:41,586 - INFO - 127.0.0.1 - - [22/Sep/2026 00:50:41] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 00:50:46,574 - WARNING - High Resource Usage! CPU: 47.3%, RAM: 92.7%
+2026-09-22 00:50:46,574 - INFO - 127.0.0.1 - - [22/Sep/2026 00:50:46] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 00:50:51,574 - WARNING - High Resource Usage! CPU: 42.2%, RAM: 92.8%
+2026-09-22 00:50:51,574 - INFO - 127.0.0.1 - - [22/Sep/2026 00:50:51] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 00:51:11,572 - WARNING - High Resource Usage! CPU: 52.3%, RAM: 87.0%
+2026-09-22 00:51:11,572 - INFO - 127.0.0.1 - - [22/Sep/2026 00:51:11] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 00:52:11,581 - WARNING - High Resource Usage! CPU: 58.1%, RAM: 93.0%
+2026-09-22 00:52:11,581 - INFO - 127.0.0.1 - - [22/Sep/2026 00:52:11] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 00:53:11,589 - WARNING - High Resource Usage! CPU: 41.3%, RAM: 94.4%
+2026-09-22 00:53:11,589 - INFO - 127.0.0.1 - - [22/Sep/2026 00:53:11] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 00:54:11,570 - WARNING - High Resource Usage! CPU: 39.2%, RAM: 96.8%
+2026-09-22 00:54:11,570 - INFO - 127.0.0.1 - - [22/Sep/2026 00:54:11] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 00:55:11,638 - WARNING - High Resource Usage! CPU: 79.5%, RAM: 96.8%
+2026-09-22 00:55:11,640 - INFO - 127.0.0.1 - - [22/Sep/2026 00:55:11] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 00:56:11,868 - WARNING - High Resource Usage! CPU: 86.0%, RAM: 90.6%
+2026-09-22 00:56:11,868 - INFO - 127.0.0.1 - - [22/Sep/2026 00:56:11] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 00:56:16,444 - WARNING - High Resource Usage! CPU: 48.1%, RAM: 91.5%
+2026-09-22 00:56:16,444 - INFO - 127.0.0.1 - - [22/Sep/2026 00:56:16] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 00:56:18,609 - INFO - 127.0.0.1 - - [22/Sep/2026 00:56:18] "GET / HTTP/1.1" 200 -
+2026-09-22 00:56:19,665 - WARNING - High Resource Usage! CPU: 70.9%, RAM: 93.6%
+2026-09-22 00:56:19,666 - INFO - 127.0.0.1 - - [22/Sep/2026 00:56:19] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 00:56:24,676 - WARNING - High Resource Usage! CPU: 49.4%, RAM: 93.8%
+2026-09-22 00:56:24,676 - INFO - 127.0.0.1 - - [22/Sep/2026 00:56:24] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 00:56:30,579 - WARNING - High Resource Usage! CPU: 84.2%, RAM: 96.1%
+2026-09-22 00:56:30,583 - INFO - 127.0.0.1 - - [22/Sep/2026 00:56:30] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 00:56:35,655 - WARNING - High Resource Usage! CPU: 97.7%, RAM: 96.4%
+2026-09-22 00:56:35,657 - INFO - 127.0.0.1 - - [22/Sep/2026 00:56:35] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 00:56:40,578 - WARNING - High Resource Usage! CPU: 35.5%, RAM: 92.9%
+2026-09-22 00:56:40,578 - INFO - 127.0.0.1 - - [22/Sep/2026 00:56:40] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 00:56:45,587 - WARNING - High Resource Usage! CPU: 52.9%, RAM: 93.0%
+2026-09-22 00:56:45,587 - INFO - 127.0.0.1 - - [22/Sep/2026 00:56:45] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 00:56:50,580 - WARNING - High Resource Usage! CPU: 64.5%, RAM: 93.0%
+2026-09-22 00:56:50,580 - INFO - 127.0.0.1 - - [22/Sep/2026 00:56:50] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 00:56:55,569 - WARNING - High Resource Usage! CPU: 35.9%, RAM: 92.8%
+2026-09-22 00:56:55,569 - INFO - 127.0.0.1 - - [22/Sep/2026 00:56:55] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 00:57:00,595 - WARNING - High Resource Usage! CPU: 33.2%, RAM: 93.1%
+2026-09-22 00:57:00,595 - INFO - 127.0.0.1 - - [22/Sep/2026 00:57:00] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 00:57:05,735 - WARNING - High Resource Usage! CPU: 91.5%, RAM: 94.4%
+2026-09-22 00:57:05,736 - INFO - 127.0.0.1 - - [22/Sep/2026 00:57:05] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 00:57:10,579 - WARNING - High Resource Usage! CPU: 49.2%, RAM: 94.0%
+2026-09-22 00:57:10,579 - INFO - 127.0.0.1 - - [22/Sep/2026 00:57:10] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 00:57:15,674 - WARNING - High Resource Usage! CPU: 100.0%, RAM: 94.7%
+2026-09-22 00:57:15,676 - INFO - 127.0.0.1 - - [22/Sep/2026 00:57:15] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 00:57:20,592 - WARNING - High Resource Usage! CPU: 82.1%, RAM: 90.5%
+2026-09-22 00:57:20,593 - INFO - 127.0.0.1 - - [22/Sep/2026 00:57:20] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 00:57:25,586 - WARNING - High Resource Usage! CPU: 91.7%, RAM: 94.9%
+2026-09-22 00:57:25,586 - INFO - 127.0.0.1 - - [22/Sep/2026 00:57:25] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 00:58:11,573 - WARNING - High Resource Usage! CPU: 88.5%, RAM: 94.3%
+2026-09-22 00:58:11,575 - INFO - 127.0.0.1 - - [22/Sep/2026 00:58:11] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 00:59:11,599 - WARNING - High Resource Usage! CPU: 33.6%, RAM: 94.1%
+2026-09-22 00:59:11,599 - INFO - 127.0.0.1 - - [22/Sep/2026 00:59:11] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 01:00:12,255 - WARNING - High Resource Usage! CPU: 89.1%, RAM: 96.3%
+2026-09-22 01:00:12,256 - INFO - 127.0.0.1 - - [22/Sep/2026 01:00:12] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 01:01:11,577 - WARNING - High Resource Usage! CPU: 57.9%, RAM: 87.1%
+2026-09-22 01:01:11,577 - INFO - 127.0.0.1 - - [22/Sep/2026 01:01:11] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 01:02:12,245 - WARNING - High Resource Usage! CPU: 62.4%, RAM: 93.3%
+2026-09-22 01:02:12,245 - INFO - 127.0.0.1 - - [22/Sep/2026 01:02:12] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 01:03:11,714 - WARNING - High Resource Usage! CPU: 100.0%, RAM: 92.9%
+2026-09-22 01:03:11,714 - INFO - 127.0.0.1 - - [22/Sep/2026 01:03:11] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 01:04:11,588 - WARNING - High Resource Usage! CPU: 30.2%, RAM: 90.8%
+2026-09-22 01:04:11,588 - INFO - 127.0.0.1 - - [22/Sep/2026 01:04:11] "GET /api/metrics HTTP/1.1" 200 -
+2026-09-22 01:05:09,559 - INFO -  * Detected change in 'C:\\Users\\harib\\system-monitor-cicd\\app.py', reloading
+2026-09-22 01:05:09,890 - INFO -  * Restarting with stat

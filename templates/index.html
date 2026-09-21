@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>System Health & Metrics Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen font-sans antialiased">
+
+  <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="h-3 w-3 rounded-full bg-emerald-500 animate-pulse"></div>
+        <h1 class="text-xl font-bold tracking-tight text-white">System Monitor <span class="text-xs font-normal text-slate-400 border border-slate-700 px-2 py-0.5 rounded-full ml-2">v1.0 CI/CD</span></h1>
+      </div>
+      <div class="text-xs text-slate-400 font-mono" id="last-updated">Updating live...</div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 py-8 space-y-8">
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- CPU -->
+      <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 shadow-xl backdrop-blur-sm">
+        <div class="flex justify-between items-center mb-4">
+          <span class="text-sm font-semibold text-slate-400 uppercase tracking-wider">CPU Usage</span>
+        </div>
+        <div class="flex items-baseline justify-between">
+          <span class="text-4xl font-extrabold text-white" id="cpu-value">--%</span>
+          <span class="text-xs text-emerald-400 font-medium" id="cpu-status">Normal</span>
+        </div>
+        <div class="w-full bg-slate-800 rounded-full h-2 mt-4 overflow-hidden">
+          <div id="cpu-bar" class="bg-blue-500 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <!-- RAM -->
+      <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 shadow-xl backdrop-blur-sm">
+        <div class="flex justify-between items-center mb-4">
+          <span class="text-sm font-semibold text-slate-400 uppercase tracking-wider">Memory (RAM)</span>
+        </div>
+        <div class="flex items-baseline justify-between">
+          <span class="text-4xl font-extrabold text-white" id="ram-value">--%</span>
+          <span class="text-xs text-emerald-400 font-medium" id="ram-status">Optimal</span>
+        </div>
+        <div class="w-full bg-slate-800 rounded-full h-2 mt-4 overflow-hidden">
+          <div id="ram-bar" class="bg-purple-500 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <!-- Disk -->
+      <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 shadow-xl backdrop-blur-sm">
+        <div class="flex justify-between items-center mb-4">
+          <span class="text-sm font-semibold text-slate-400 uppercase tracking-wider">Disk Usage</span>
+        </div>
+        <div class="flex items-baseline justify-between">
+          <span class="text-4xl font-extrabold text-white" id="disk-value">--%</span>
+          <span class="text-xs text-emerald-400 font-medium" id="disk-status">Healthy</span>
+        </div>
+        <div class="w-full bg-slate-800 rounded-full h-2 mt-4 overflow-hidden">
+          <div id="disk-bar" class="bg-emerald-500 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chart -->
+    <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 shadow-xl backdrop-blur-sm">
+      <h2 class="text-lg font-bold text-white mb-4">Real-Time Performance History</h2>
+      <div class="h-64">
+        <canvas id="metricsChart"></canvas>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    const ctx = document.getElementById('metricsChart').getContext('2d');
+    const chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: [],
+        datasets: [
+          { label: 'CPU %', borderColor: '#3b82f6', backgroundColor: 'rgba(59, 130, 246, 0.1)', data: [], fill: true, tension: 0.4 },
+          { label: 'RAM %', borderColor: '#a855f7', backgroundColor: 'rgba(168, 85, 247, 0.1)', data: [], fill: true, tension: 0.4 }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: { grid: { color: '#1e293b' }, ticks: { color: '#64748b' } },
+          y: { min: 0, max: 100, grid: { color: '#1e293b' }, ticks: { color: '#64748b' } }
+        },
+        plugins: { legend: { labels: { color: '#94a3b8' } } }
+      }
+    });
+
+    async function fetchMetrics() {
+      try {
+        const res = await fetch('/api/metrics');
+        const data = await res.json();
+        const now = new Date().toLocaleTimeString();
+
+        document.getElementById('cpu-value').innerText = data.cpu_usage_pct + '%';
+        document.getElementById('cpu-bar').style.width = data.cpu_usage_pct + '%';
+
+        document.getElementById('ram-value').innerText = data.ram_usage_pct + '%';
+        document.getElementById('ram-bar').style.width = data.ram_usage_pct + '%';
+
+        document.getElementById('disk-value').innerText = data.disk_usage_pct + '%';
+        document.getElementById('disk-bar').style.width = data.disk_usage_pct + '%';
+
+        document.getElementById('last-updated').innerText = 'Last updated: ' + now;
+
+        if (chart.data.labels.length > 10) {
+          chart.data.labels.shift();
+          chart.data.datasets[0].data.shift();
+          chart.data.datasets[1].data.shift();
+        }
+        chart.data.labels.push(now);
+        chart.data.datasets[0].data.push(data.cpu_usage_pct);
+        chart.data.datasets[1].data.push(data.ram_usage_pct);
+        chart.update();
+
+      } catch (err) {
+        console.error('Error fetching metrics:', err);
+      }
+    }
+
+    setInterval(fetchMetrics, 2000);
+    fetchMetrics();
+  </script>
+</body>
+</html>
