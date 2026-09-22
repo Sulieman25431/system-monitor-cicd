@@ -1,0 +1,10 @@
+{
+    "dev": {
+        "app_function": "app.app",
+        "aws_region": "ap-south-1",
+        "profile_name": "default",
+        "project_name": "system-monitor-cicd",
+        "runtime": "python3.12",
+        "s3_bucket": "zappa-vdy8xve1b"
+    }
+}
