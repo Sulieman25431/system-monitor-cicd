@@ -53,28 +53,31 @@ CI/CD Deployment                          +------------------------+
    git clone [https://github.com/Sulieman25431/system-monitor-cicd.git](https://github.com/Sulieman25431/system-monitor-cicd.git)
    cd system-monitor-cicd
 
- 1. Set up virtual environment:
+2. **Set up virtual environment:**
+    ```bash
     python -m venv venv
-   source venv/Scripts/activate  # On Windows Git Bash
+   ```bash
+    source venv/Scripts/activate  # On Windows Git Bash
 
- 2. Install dependencies:
-     pip install -r requirements.txt
-    
- 4. Run local backend server:
-   python app.py
-----
+3. **Install dependencies:**
+   ```bash
+   pip install -r requirements.txt
+
+4. **Run local backend server:**
+    ```bash
+    python app.py
 
 ## ☁️ Deployment (AWS Lambda via Zappa)
 
-To deploy updates to AWS Lambda:
- # Activate virtual environment
-source venv/Scripts/activate
+1. **To deploy updates to AWS Lambda:**
+    ```bash
+    # Activate virtual environment
+     source venv/Scripts/activate
 
-# Deploy or update stage
-zappa update dev
+    ```bash
+    # Deploy or update stage
+    zappa update dev
 
-
----------------------------
-
-📄 License
+##📄 License
 This project is open-source and available under the MIT License.
+
