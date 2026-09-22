@@ -1,38 +1,80 @@
-# Real-Time System Health & Log Monitoring Tool with CI/CD
+# Real-Time System Monitor & CI/CD Pipeline
 
-A modern, real-time system resource monitor and automated logging dashboard built with Python, Flask, and GitHub Actions CI/CD. This application tracks system hardware performance (CPU, RAM, Disk usage) and visualizes the metrics on an interactive dark-mode dashboard with live graphs.
+A lightweight, serverless real-time system performance monitoring application. Built with a Flask microservice hosted on **AWS Lambda** via **AWS API Gateway**, and a dynamic frontend dashboard deployed using **GitHub Pages** with automated **GitHub Actions CI/CD**.
 
 ---
 
-## 🚀 Key Features
+## 🌟 Live Links
 
-- **Live Real-Time Dashboard**: Interactive UI built with Tailwind CSS and Chart.js that updates every 2 seconds without page refreshes.
-- **Hardware Metric Tracking**: Utilizes `psutil` to track CPU, RAM, and Disk utilization directly from the host system.
-- **Automated Logging**: Background logging mechanism that writes health status and performance data to `system_health.log`.
-- **Automated CI/CD Pipeline**: Integrated GitHub Actions workflow (`.github/workflows/main.yml`) that triggers automated tests and validation on every push or pull request.
-- **RESTful API Endpoint**: Exposes `/api/metrics` to serve system status as JSON for external integrations.
+* **Live Dashboard (Frontend):** [https://sulieman25431.github.io/system-monitor-cicd/](https://sulieman25431.github.io/system-monitor-cicd/)
+* **Live API Endpoint (Backend):** `https://009gvrqhoh.execute-api.ap-south-1.amazonaws.com/dev/api/metrics`
+
+---
+
+## 🏗️ Architecture & Data Flow
+
++---------------------+        HTTP GET        +------------------------+
+|  GitHub Pages       | ---------------------> |  AWS API Gateway       |
+|  (HTML5/JS/Chart.js)|                        |  (REST Endpoint)       |
++---------------------+                        +------------------------+
+^                                               |
+|                                               v
+CI/CD Deployment                          +------------------------+
+|                                   |  AWS Lambda            |
++---------------------+                        |  (Flask Serverless App)|
+|  GitHub Actions     |                        +------------------------+
+|  (Automated Build)  |                                    |
++---------------------+                                    v
++------------------------+
+|  JSON Metrics Payload  |
+|  (CPU %, RAM %, Disk %)|
++------------------------+
+
+1. **Frontend:** Fetches CPU, RAM, and Disk metrics every 2 seconds via asynchronous HTTP requests (`fetch`).
+2. **API Gateway:** Routes incoming client requests to the serverless backend function.
+3. **AWS Lambda:** Runs the Flask serverless application, calculating real-time system usage and metric variations, returning structured JSON payloads.
+4. **CI/CD Pipeline:** GitHub Actions automatically tests code quality (linting) and deploys static site updates straight to GitHub Pages upon every push to the `main` branch.
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Backend**: Python 3.x, Flask, `psutil`
-- **Frontend**: HTML5, Tailwind CSS (CDN), Chart.js (CDN), JavaScript (ES6 Fetch API)
-- **CI/CD & DevOps**: GitHub Actions, Git
-- **Logging**: Python `logging` library
+* **Backend:** Python 3.x, Flask, Flask-CORS, Zappa, `psutil`
+* **Cloud Infrastructure:** AWS Lambda, AWS API Gateway
+* **Frontend:** HTML5, Tailwind CSS, JavaScript (ES6+), Chart.js
+* **CI/CD & Hosting:** GitHub Actions, GitHub Pages, Git
 
 ---
 
-## 📁 Repository Structure
+## 🚀 Local Development Setup
 
-```text
-system-monitor-cicd/
-├── .github/
-│   └── workflows/
-│       └── main.yml        # GitHub Actions CI/CD pipeline configuration
-├── templates/
-│   └── index.html          # Dashboard UI with Tailwind CSS & Chart.js
-├── app.py                  # Main Flask application & API routes
-├── monitor.py              # System resource monitoring & logging utility
-├── requirements.txt        # Python dependencies
-└── system_health.log       # Output log file for system events
+1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/Sulieman25431/system-monitor-cicd.git](https://github.com/Sulieman25431/system-monitor-cicd.git)
+   cd system-monitor-cicd
+
+ 1. Set up virtual environment:
+    python -m venv venv
+   source venv/Scripts/activate  # On Windows Git Bash
+
+ 2. Install dependencies:
+     pip install -r requirements.txt
+    
+ 4. Run local backend server:
+   python app.py
+----
+
+## ☁️ Deployment (AWS Lambda via Zappa)
+
+To deploy updates to AWS Lambda:
+ # Activate virtual environment
+source venv/Scripts/activate
+
+# Deploy or update stage
+zappa update dev
+
+
+---------------------------
+
+📄 License
+This project is open-source and available under the MIT License.
