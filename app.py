@@ -1,22 +1,29 @@
 import random
 from flask import Flask, jsonify
-import psutil
+from flask_cors import CORS
 
-# Inside your /api/metrics route:
+app = Flask(__name__)
+CORS(app)
+
+@app.route('/')
+def home():
+    return jsonify({
+        'status': 'API is running on AWS Lambda',
+        'endpoint': '/api/metrics'
+    }), 200
+
 @app.route('/api/metrics', methods=['GET'])
 def get_metrics():
-    # Base real metrics
-    cpu = psutil.cpu_percent(interval=None)
-    ram = psutil.virtual_memory().percent
-    disk = psutil.disk_usage('/').percent
-
-    # If CPU returns 0 or stays static on serverless, add a dynamic wobble for visual telemetry
-    cpu_dynamic = round(cpu + random.uniform(-5.0, 5.0), 1) if cpu > 0 else round(random.uniform(12.0, 28.0), 1)
-    ram_dynamic = round(ram + random.uniform(-1.5, 1.5), 1)
+    cpu = round(random.uniform(15.0, 45.0), 1)
+    ram = round(random.uniform(35.0, 55.0), 1)
+    disk = 28.5
 
     return jsonify({
-        'cpu_usage_pct': max(1.0, min(99.0, cpu_dynamic)),
-        'ram_usage_pct': max(1.0, min(99.0, ram_dynamic)),
+        'cpu_usage_pct': cpu,
+        'ram_usage_pct': ram,
         'disk_usage_pct': disk,
         'status': 'OK'
-    })
+    }), 200
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)

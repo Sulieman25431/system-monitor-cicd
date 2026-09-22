@@ -99,7 +99,7 @@
 
     async function fetchMetrics() {
       try {
-        const res = await fetch('https://wbhlsjf5fa.execute-api.ap-south-1.amazonaws.com/dev/api/metrics');
+        const API_URL = "https://009gvrqhoh.execute-api.ap-south-1.amazonaws.com/dev/api/metrics";
         const data = await res.json();
 
         // 1. Update text cards (matched to HTML element IDs)
